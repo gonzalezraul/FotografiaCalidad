@@ -18,7 +18,9 @@ db_config = {
     'user': os.getenv('DB_USER'),
     'password': os.getenv('DB_PASSWORD'),
     'host': os.getenv('DB_HOST'),
-    'database': os.getenv('DB_NAME')
+    'database': os.getenv('DB_NAME'),
+    'port': int(os.getenv('DB_PORT', 3306)),  # Convierte a entero, valor por defecto 3306 si no se define
+    'ssl_ca': os.getenv('DB_CA_CERT'),  # Ruta al certificado CA
 }
 
 # Configuración de HubSpot
