@@ -12,6 +12,7 @@ body {
   color: #333;
 }
 
+/* ===== HEADER ===== */
 header {
   background: #333;
   color: #fff;
@@ -24,7 +25,6 @@ nav ul {
   display: flex;
   justify-content: center;
   gap: 1em;
-  padding: 0;
 }
 
 nav ul li a {
@@ -38,19 +38,93 @@ nav ul li a:hover {
   color: #f9f9f9;
 }
 
-/* ===== SECCIÓN INTRO ===== */
-.intro {
-  padding: 2em 1em;
+/* ===== MAIN CONTENT: NEWSLETTER ===== */
+.newsletter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+.newsletter-form {
+  width: 100%;
+  max-width: 500px;
+  background-color: #f9f9f9;
+  padding: 2em;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
-  background-color: #f4f4f4;
-  margin-bottom: 2em;
+}
+
+.newsletter-form h2 {
+  margin-bottom: 1.5em;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.message {
+  margin-bottom: 1em;
+  padding: 0.5em;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.error-message {
+  background-color: #ffe5e5;
+  color: #d00;
+}
+
+.success-message {
+  background-color: #e0ffe0;
+  color: #2a8a2a;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  padding: 0.8em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* ===== BOTÓN ===== */
+.btn-submit {
+  padding: 0.8em;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #555;
 }
 
 /* ===== CARRUSEL ===== */
 .carousel {
   position: relative;
   width: 100%;
-  height: 50vh;
+  height: 60vh;
   perspective: 1000px;
   margin: 2em auto;
   display: flex;
@@ -63,20 +137,20 @@ nav ul li a:hover {
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
-  transition: transform 2s ease; /* Transición más lenta para la rotación */
+  transition: transform 2s ease;
 }
 
 .carousel__cell {
   position: absolute;
-  width: 200px;
-  height: 150px;
+  width: 250px;
+  height: 200px;
   background-color: #f4f4f4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
-  transform-origin: center center -300px; /* Ajusta la distancia del centro */
+  transform-origin: center center -400px;
 }
 
 .carousel__cell img {
@@ -85,16 +159,7 @@ nav ul li a:hover {
   border-radius: 10px;
 }
 
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  padding: 1em;
-  background-color: #333;
-  color: #fff;
-  margin-top: 2em;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
+/* Ajustes responsive */
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
@@ -108,6 +173,15 @@ footer {
   .carousel__cell {
     width: 150px;
     height: 100px;
-    transform-origin: center center -200px; /* Ajusta la distancia para pantallas pequeñas */
+    transform-origin: center center -200px;
   }
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 1em;
+  background-color: #333;
+  color: #fff;
+  margin-top: 2em;
 }

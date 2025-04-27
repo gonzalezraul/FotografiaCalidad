@@ -80,49 +80,35 @@ def insert_data():
     else:
         return jsonify({'error': 'Faltan datos'}), 400
 
-# Ruta para gestionar y enviar la newsletter
+# Ruta para suscribirse a la newsletter (guarda nombre y correo)
 @app.route('/newsletter', methods=['GET', 'POST'])
 def newsletter():
     if request.method == 'POST':
-        subject = request.form.get('subject')
-        content = request.form.get('content')
-
-        if not subject or not content:
-            return jsonify({'error': 'Falta el asunto o el contenido de la newsletter'}), 400
-
-        # Recuperar todos los emails de los suscriptores desde MySQL
+        name = request.form.get('name')
+        email = request.form.get('email')
+  
+        if not name or not email or '@' not in email:
+            return render_template("newsletter.html", error="Por favor, ingresa un nombre y un email válido.")
+  
         try:
             conn = mysql.connector.connect(**db_config)
             cursor = conn.cursor()
-            cursor.execute("SELECT email FROM suscriptores")
-            rows = cursor.fetchall()
-            emails = [row[0] for row in rows]
+            query = "INSERT INTO suscriptores (name, email) VALUES (%s, %s)"
+            cursor.execute(query, (name, email))
+            conn.commit()
             cursor.close()
             conn.close()
+  
+            # Sincronizar con HubSpot
+            hubspot_result = crear_contacto_hubspot(name, email)
+  
+            if not hubspot_result:
+                return render_template("newsletter.html", error="Suscripción guardada, pero falló la sincronización con HubSpot.")
+  
+            return render_template("newsletter.html", success="¡Te has suscrito correctamente a la Newsletter!")
         except mysql.connector.Error as err:
-            return jsonify({'error': str(err)}), 500
-
-        # Configuración del correo electrónico
-        message = MIMEMultipart()
-        message["Subject"] = subject
-        message["From"] = sender_email
-        message.attach(MIMEText(content, "plain"))
-
-        try:
-            # Configurar el servidor SMTP de Brevo
-            server = smtplib.SMTP(smtp_host, smtp_port)
-            server.starttls()
-            server.login(sender_email, sender_password)
-            # Enviar el correo a cada suscriptor
-            for email in emails:
-                message["To"] = email
-                server.sendmail(sender_email, email, message.as_string())
-            server.quit()
-            return jsonify({'message': 'Newsletter enviada correctamente'}), 200
-        except Exception as e:
-            return jsonify({'error': str(e)}), 500
-
-    # Método GET: mostrar formulario de ejemplo para enviar newsletter
+            return render_template("newsletter.html", error=str(err))
+  
     return render_template("newsletter.html")
 
 # Ruta para obtener todos los suscriptores
