@@ -1,0 +1,22 @@
+# Archivo .gitignore - Ignorar archivos y carpetas sensibles
+
+# Ignorar archivos de configuración sensibles
+.env
+
+# Ignorar archivos y carpetas de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar entornos virtuales
+venv/
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar configuraciones de IDEs
+.vscode/
+.idea/
+
+# Ignorar otros archivos innecesarios
+.DS_Store
