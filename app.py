@@ -39,13 +39,15 @@ def crear_contacto_hubspot(nombre, email):
         }
     )
     try:
+        print(f"[DEBUG] Intentando crear contacto en HubSpot con: {nombre}, {email}")
         respuesta = hubspot_client.crm.contacts.basic_api.create(
             simple_public_object_input=contacto_input,
-            _request_timeout=10  # Agregado timeout de 10 segundos
+            _request_timeout=10
         )
+        print(f"[DEBUG] Respuesta de HubSpot: {respuesta}")
         return respuesta.id
     except Exception as e:
-        print(f"Error al crear contacto en HubSpot: {e}")
+        print(f"[ERROR] Error al crear contacto en HubSpot: {e}")
         return None
 
 @app.route("/")
@@ -89,11 +91,13 @@ def newsletter():
     if request.method == 'POST':
         name = request.form.get('name')
         email = request.form.get('email')
-  
+
         if not name or not email or '@' not in email:
+            print("[DEBUG] Datos inválidos en newsletter")
             return render_template("newsletter.html", error="Por favor, ingresa un nombre y un email válido.")
-  
+
         try:
+            # Conexión a la base de datos
             conn = mysql.connector.connect(**db_config)
             cursor = conn.cursor()
             query = "INSERT INTO suscriptores (name, email) VALUES (%s, %s)"
@@ -101,17 +105,19 @@ def newsletter():
             conn.commit()
             cursor.close()
             conn.close()
-  
+            print(f"[DEBUG] Suscriptor guardado en BD: {name}, {email}")
+
             # Sincronizar con HubSpot
             hubspot_result = crear_contacto_hubspot(name, email)
-  
             if not hubspot_result:
+                print("[DEBUG] HubSpot no devolvió ID, falla en sincronización.")
                 return render_template("newsletter.html", error="Suscripción guardada, pero falló la sincronización con HubSpot.")
-  
+
+            print(f"[DEBUG] Contacto creado en HubSpot con id: {hubspot_result}")
             return render_template("newsletter.html", success="¡Te has suscrito correctamente a la Newsletter!")
         except mysql.connector.Error as err:
-            return render_template("newsletter.html", error=str(err))
-  
+            print(f"[ERROR] Error al insertar en BD: {err}")
+            return render_template("newsletter.html", error="Error al procesar la suscripción.")
     return render_template("newsletter.html")
 
 # Ruta para obtener todos los suscriptores
