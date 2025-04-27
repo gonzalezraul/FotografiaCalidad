@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fotografías Calidad</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Fotografías Calidad</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/about">Sobre nosotros</a></li>
+        <li><a href="/newsletter">Newsletter</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Bienvenido a Fotografías Calidad</h2>
+      <p>Ofrecemos las mejores fotografías de calidad para tus necesidades.</p>
+    </section>
+
+    <section class="carousel-section">
+      <h2>Nuestras Fotografías</h2>
+      <div class="carousel">
+        <div class="carousel__container">
+          <!-- Ajusta la cantidad de imágenes que quieras -->
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto1.jpg') }}" alt="Fotografía 1"></div>
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto2.jpg') }}" alt="Fotografía 2"></div>
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto3.jpg') }}" alt="Fotografía 3"></div>
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto4.jpg') }}" alt="Fotografía 4"></div>
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto5.jpg') }}" alt="Fotografía 5"></div>
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto6.jpg') }}" alt="Fotografía 6"></div>
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto7.jpg') }}" alt="Fotografía 7"></div>
+          <div class="carousel__cell"><img src="{{ url_for('static', filename='imgs/foto8.jpg') }}" alt="Fotografía 8"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+flask
+mysql-connector-python
+hubspot-api-client
+python-dotenv
+gunicorn
