@@ -109,13 +109,7 @@ def newsletter():
             conn.close()
             print(f"[DEBUG] Suscriptor guardado en BD: {name}, {email}")
 
-            # Sincronizar con HubSpot
-            hubspot_result = crear_contacto_hubspot(name, email)
-            if not hubspot_result:
-                print("[DEBUG] HubSpot no devolvió ID, falla en sincronización.")
-                return render_template("newsletter.html", error="Suscripción guardada, pero falló la sincronización con HubSpot.")
-
-            print(f"[DEBUG] Contacto creado en HubSpot con id: {hubspot_result}")
+            # Solo se inserta en DB, no se conecta a HubSpot
             return render_template("newsletter.html", success="¡Te has suscrito correctamente a la Newsletter!")
         except mysql.connector.Error as err:
             print(f"[ERROR] Error al insertar en BD: {err}")
