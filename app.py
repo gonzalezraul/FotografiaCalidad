@@ -43,7 +43,7 @@ def crear_contacto_hubspot(nombre, email):
     try:
         print(f"[DEBUG] Intentando crear contacto en HubSpot con: {nombre}, {email}")
         respuesta = hubspot_client.crm.contacts.basic_api.create(
-            simple_public_object_input=contacto_input,
+            simple_public_object_input_for_create=contacto_input,
             _request_timeout=10
         )
         print(f"[DEBUG] Respuesta de HubSpot: {respuesta}")
