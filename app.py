@@ -8,7 +8,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 # Cargar variables de entorno
 load_dotenv()
@@ -39,7 +39,10 @@ def crear_contacto_hubspot(nombre, email):
         }
     )
     try:
-        respuesta = hubspot_client.crm.contacts.basic_api.create(simple_public_object_input=contacto_input)
+        respuesta = hubspot_client.crm.contacts.basic_api.create(
+            simple_public_object_input=contacto_input,
+            _request_timeout=10  # Agregado timeout de 10 segundos
+        )
         return respuesta.id
     except Exception as e:
         print(f"Error al crear contacto en HubSpot: {e}")
